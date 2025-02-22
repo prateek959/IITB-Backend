@@ -10,7 +10,7 @@ const auth = async (req, res, next) => {
         try {
             const t1 = token.split(' ')[1];
             const decode = jwt.verify(t1, process.env.JWT_SECRET_KEY);
-            // console.log(decode);
+
             req.user = decode
             next();
         } catch (error) {
@@ -29,7 +29,7 @@ const role = (...allowrole)=>{
             else{
                 const role = req.user.role;
             // console.log(role);
-            if (!allowrole.includes(req.user.role)) {
+            if (!allowrole.includes(role)) {
                 return res.status(403).json({ msg: "You are not authorized" });
             }
             next();
